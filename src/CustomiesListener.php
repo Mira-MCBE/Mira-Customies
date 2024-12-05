@@ -5,7 +5,9 @@ namespace customiesdevs\customies;
 
 use customiesdevs\customies\block\CustomiesBlockFactory;
 use customiesdevs\customies\item\CustomiesItemFactory;
+use customiesdevs\customies\player\CustomPlayer;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\server\DataPacketSendEvent;
 use pocketmine\network\mcpe\protocol\BiomeDefinitionListPacket;
 use pocketmine\network\mcpe\protocol\ItemComponentPacket;
@@ -18,7 +20,6 @@ use function array_merge;
 use function count;
 
 final class CustomiesListener implements Listener {
-
 	private ?ItemComponentPacket $cachedItemComponentPacket = null;
 	/** @var ItemTypeEntry[] */
 	private array $cachedItemTable = [];
@@ -61,4 +62,8 @@ final class CustomiesListener implements Listener {
 			}
 		}
 	}
+
+    public function onPlayerCreation(PlayerCreationEvent $event): void {
+        $event->setPlayerClass(CustomPlayer::class);
+    }
 }
